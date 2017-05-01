@@ -13,6 +13,24 @@ navbarPage("Michel Thomas Dutch Practice App",
            # Main page
            tabPanel("Practice", 
                     fluidRow(
+                      column(10,
+                             align='center',
+                             fluidRow(
+                               actionButton("go", "New phrase"),
+                               checkboxInput('show_answer', 'Show answer',
+                                             value = FALSE)),
+                             fluidRow(
+                               column(6,
+                                      align='left',
+                                      # h2(textOutput('delete_me')),
+                                      h2(textOutput('question_text')),
+                                      br()),
+                               column(6,
+                                      align = 'left',
+                                      h2(textOutput('answer_text')),
+                                      br())
+                             )
+                      ),
                       column(2,
                              selectInput('to', 
                                          'Language',
@@ -24,22 +42,7 @@ navbarPage("Michel Thomas Dutch Practice App",
                                                 choices = 1:8),
                              textInput('track_number',
                                        'Track number',
-                                       value = NULL)),
-                      column(10,
-                             align='center',
-                             fluidRow(
-                               actionButton("go", "New phrase"),
-                                      checkboxInput('show_answer', 'Show answer',
-                                                    value = FALSE)),
-                             fluidRow(
-                               column(6,
-                                      align='left',
-                                      # h2(textOutput('delete_me')),
-                                      h2(textOutput('question_text'))),
-                               column(6,
-                                      h2(textOutput('answer_text')))
-                             )
-                             )
+                                       value = NULL))
                     )),
            # Other pages
            navbarMenu("More",

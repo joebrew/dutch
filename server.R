@@ -41,21 +41,28 @@ shinyServer(function(input, output, session) {
       sample_n(1)
   })
   
-  # output$delete_me <- renderText({
-  #   paste0('Disc number is ', paste0(disc_number(), collapse = ', '),
-  #          '\n',
-  #          'Track number is ', paste0(track_number(), collapse = ', '))
+  # Create a reactive answer text
+  # answer_text <- eventReactive(input$show, {
+  #   phrase()$answer
   # })
-  
+
   output$question_text <- renderText({
-    phrase()$question
+    x <- phrase()$question
+    if(nchar(x) < 27){
+      x <- paste0(x, '\n')
+    }
+    x
   })
   output$answer_text <- renderText({
     if(input$show_answer){
-      phrase()$answer
+      x <- phrase()$answer
+      if(nchar(x) < 27){
+        x <- paste0(x, '\n')
+      }
     } else {
-      ''
+      x <- ''
     }
+    x
   })
   output$all_data <- renderTable({
     x <- sub_data()
