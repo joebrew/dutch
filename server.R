@@ -6,7 +6,28 @@ source('global.R')
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
-   
+  
+  # Create a counter
+  output$counter_text <- renderText({
+    x <- input$go
+    if(x > 0){
+      paste('(',x,')')
+    } else {
+      ''
+    }
+    
+  })
+  
+  observe({
+    if(is.null(input$go)){
+      runjs("
+            var click = 0;
+            Shiny.onInputChange('go', click)
+            var dwnldBtn = document.getElementById('go')
+            go.onclick = function() {click += 1; Shiny.onInputChange('go', click)};
+            ")      
+    }
+  })
   # Create a reactive disc number
   disc_number <- reactive({
     # Make disc number include all if blank
@@ -49,7 +70,8 @@ shinyServer(function(input, output, session) {
   output$question_text <- renderText({
     x <- phrase()$question
     if(nchar(x) < 27){
-      x <- paste0(x, '\n')
+      the_diff <- 27 - nchar(x)
+      x <- paste0(x, paste0(rep(' ', the_diff), collapse = ''))
     }
     x
   })
@@ -57,7 +79,8 @@ shinyServer(function(input, output, session) {
     if(input$show_answer){
       x <- phrase()$answer
       if(nchar(x) < 27){
-        x <- paste0(x, '\n')
+        the_diff <- 27 - nchar(x)
+        x <- paste0(x, paste0(rep(' ', the_diff), collapse = ''))
       }
     } else {
       x <- ''
