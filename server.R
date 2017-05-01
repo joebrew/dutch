@@ -9,13 +9,7 @@ shinyServer(function(input, output, session) {
   
   # Create a counter
   output$counter_text <- renderText({
-    x <- input$go
-    if(x > 0){
-      paste('(',x,')')
-    } else {
-      ''
-    }
-    
+    paste('(',input$go,')')
   })
   
   observe({

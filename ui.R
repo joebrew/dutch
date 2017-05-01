@@ -16,8 +16,8 @@ navbarPage("Michel Thomas Dutch Practice App",
                       column(10,
                              align='center',
                              fluidRow(
-                               textOutput('counter_text'),
                                actionButton("go", "New phrase"),
+                               textOutput('counter_text'),
                                checkboxInput('show_answer', 'Show answer',
                                              value = FALSE)),
                              fluidRow(
