@@ -3,8 +3,18 @@ library(gsheet)
 
 # Read in michel thomas phrases
 # mt <- read_csv('data/vocab.csv')
-mt_url <- 'https://docs.google.com/spreadsheets/d/1XeRK8FOn2TB-cExvCxostDGcyBrPozV0vV2twXVxfC8/edit?usp=sharing'
-mt <- gsheet2tbl(mt_url)
+file_name <- paste0(Sys.Date(),
+                    '-mt.RData')
+if(file_name %in% dir('data')){
+  load(paste0('data/', file_name))
+} else {
+  mt_url <- 'https://docs.google.com/spreadsheets/d/1XeRK8FOn2TB-cExvCxostDGcyBrPozV0vV2twXVxfC8/edit?usp=sharing'
+  mt <- gsheet2tbl(mt_url)
+  save(mt,
+       file = paste0('data/', file_name))
+}
+
+
 
 # Make sure all rows are populated
 mt <- mt %>%
