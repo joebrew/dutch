@@ -1,5 +1,6 @@
 
 library(shiny)
+library(shinyBS)
 
 # Source global
 source('global.R')
@@ -36,10 +37,12 @@ shinyServer(function(input, output, session) {
   track_number <- reactive({
     # Make disc number include all if blank
     tn <- input$track_number
-    if(is.null(tn) | length(tn) == 0 | nchar(tn) == 0){
-      tn <- 1:100
-    }
-    as.numeric(tn)
+    # if(is.null(tn) | length(tn) == 0){
+    #   tn <- 1:100
+    # }
+    as.numeric(seq(min(tn),
+                   max(tn),
+                   1))
   })
   
   # Create a reactive dataset
@@ -69,6 +72,7 @@ shinyServer(function(input, output, session) {
     }
     x
   })
+  
   output$answer_text <- renderText({
     if(input$show_answer){
       x <- phrase()$answer
@@ -81,6 +85,15 @@ shinyServer(function(input, output, session) {
     }
     x
   })
+  
+  # Mouseover for the answer
+  output$button <- renderUI({
+    # tags$span(
+      bsPopover("question_text", phrase()$answer,
+                trigger = 'hover')
+      # )
+  })
+  
   output$all_data <- renderTable({
     x <- sub_data()
     names(x) <- toupper(names(x))

@@ -8,6 +8,7 @@
 #
 
 library(shiny)
+library(shinyBS)
 navbarPage("Michel Thomas Dutch Practice App",
            theme = shinythemes::shinytheme("flatly"),  
            # Main page
@@ -23,9 +24,10 @@ navbarPage("Michel Thomas Dutch Practice App",
                              fluidRow(
                                column(6,
                                       align='left',
-                                      # h2(textOutput('delete_me')),
                                       h2(textOutput('question_text')),
-                                      hr(),hr(), br(),br(),br(), hr(), hr()),
+                                      hr(),
+                                      uiOutput("button"),
+                                      hr(), br(),br(),br(), hr(), hr()),
                                column(6,
                                       align = 'left',
                                       h2(textOutput('answer_text')),
@@ -41,9 +43,9 @@ navbarPage("Michel Thomas Dutch Practice App",
                              checkboxGroupInput('disc_number',
                                                 'Disc number',
                                                 choices = 1:8),
-                             textInput('track_number',
+                             sliderInput('track_number',
                                        'Track number',
-                                       value = NULL))
+                                       min = 0, max = 20, value = c(0, 20)))
                     )),
            # Other pages
            navbarMenu("More",
